@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj": {}
+    "C:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj": {}
   },
   "projects": {
-    "c:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj": {
+    "C:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj",
+        "projectUniqueName": "C:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj",
         "projectName": "checkers",
-        "projectPath": "c:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj",
+        "projectPath": "C:\\Users\\minil\\Development\\checkers\\server\\checkers.csproj",
         "packagesPath": "C:\\Users\\minil\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\minil\\Development\\checkers\\server\\obj\\",
+        "outputPath": "C:\\Users\\minil\\Development\\checkers\\server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\minil\\AppData\\Roaming\\NuGet\\NuGet.Config"

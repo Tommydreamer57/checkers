@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "server/checkers.sln"
+    "dotnet.defaultSolution": "server/checkers.sln",
+    "editor.tabSize": 2
 }
