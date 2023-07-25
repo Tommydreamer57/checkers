@@ -42,7 +42,22 @@ namespace Checkers
 
         public override void Write(Utf8JsonWriter writer, Movement value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException("Serialization of Movement is not implemented.");
+            writer.WriteStartObject();
+
+            WriteCoordinateObject(writer, "start", value.Start);
+            WriteCoordinateObject(writer, "delta", value.Delta);
+            WriteCoordinateObject(writer, "end", value.End);
+
+            writer.WriteEndObject();
+        }
+
+        private static void WriteCoordinateObject(Utf8JsonWriter writer, String propertyName, (int X, int Y) coord)
+        {
+            writer.WritePropertyName(propertyName);
+            writer.WriteStartObject();
+            writer.WriteNumber("x", coord.X);
+            writer.WriteNumber("y", coord.Y);
+            writer.WriteEndObject();
         }
     }
 }

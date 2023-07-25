@@ -66,9 +66,14 @@ namespace Checkers
             }
         }
 
+        public bool CoordinateIsValid(int n) => (n < 8) && (n >= 0);
+        public bool CoordinateIsValid(int x, int y) => CoordinateIsValid(x) && CoordinateIsValid(y);
+        public bool CoordinateIsValid((int X, int Y) coord) => CoordinateIsValid(coord.X, coord.Y);
+
         public Piece GetPiece((int X, int Y) coordinates) { return GetPiece(coordinates.X, coordinates.Y); }
         public Piece GetPiece(int x, int y)
         {
+            if (!CoordinateIsValid(x, y)) return new Piece();
             var piece = Pieces[x, y];
             if (piece == null) return new Piece();
             else return piece;
@@ -91,6 +96,9 @@ namespace Checkers
         public bool MovementIsValid(Movement movement)
         {
             Piece piece = GetPiece(movement.Start);
+
+            if (piece.Color != CurrentTurnColor) return false;
+
             Piece blockingPiece = GetPiece(movement.End);
 
             if (!blockingPiece.IsNone()) return false;
@@ -110,10 +118,8 @@ namespace Checkers
         public List<Movement> GetValidMovements(int x, int y) { return GetValidMovements((x, y)); }
         public List<Movement> GetValidMovements((int X, int Y) start)
         {
-            int x = start.X;
-            int y = start.Y;
 
-            Piece piece = GetPiece(x, y);
+            Piece piece = GetPiece(start);
 
             if (piece.IsNone()) return new List<Movement>();
 
@@ -144,25 +150,30 @@ namespace Checkers
                 int dx = X;
                 int dy = Y;
 
-                int ex = x + dx;
-                int ey = y + dy;
+                int ex = start.X + dx;
+                int ey = start.Y + dy;
 
                 Piece otherPiece = GetPiece(ex, ey);
                 bool isOpposite = piece.IsOppositeColor(otherPiece);
 
                 if (isOpposite)
                 {
-                    ex += dx;
-                    ey += dy;
+                    dx *= 2;
+                    dy *= 2;
+
+                    ex = start.X + dx;
+                    ey = start.Y + dy;
 
                     otherPiece = GetPiece(ex, ey);
                 }
 
-                if (otherPiece.IsNone())
+                if (otherPiece.IsNone() && CoordinateIsValid(ex, ey))
                 {
                     (int X, int Y) finalDelta = new(dx, dy);
 
-                    result.Add(new Movement(start, finalDelta));
+                    var movement = new Movement(start, finalDelta);
+
+                    if (MovementIsValid(movement)) result.Add(movement);
                 }
             }
 
