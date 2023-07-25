@@ -6,7 +6,7 @@ namespace Checkers
     public class Board
     {
         [JsonConverter(typeof(PieceArrayConverter))]
-        public Piece[,] Spaces { get; private set; }
+        public Piece[,] Pieces { get; private set; }
         // public List<((int X, int Y), Piece)> Pieces { get { return GetAllPieces(); } }
         public PieceColor CurrentTurnColor { get; set; }
         public int CurrentTurnCount { get; set; }
@@ -18,7 +18,7 @@ namespace Checkers
             int currentTurnCount = 0,
             List<Movement>? currentTurnMovements = null)
         {
-            Spaces = new Piece[8, 8];
+            Pieces = new Piece[8, 8];
             CurrentTurnColor = currentTurnColor;
             CurrentTurnCount = currentTurnCount;
             if (currentTurnMovements == null) CurrentTurnMovements = new List<Movement>();
@@ -69,7 +69,7 @@ namespace Checkers
         public Piece GetPiece((int X, int Y) coordinates) { return GetPiece(coordinates.X, coordinates.Y); }
         public Piece GetPiece(int x, int y)
         {
-            var piece = Spaces[x, y];
+            var piece = Pieces[x, y];
             if (piece == null) return new Piece();
             else return piece;
         }
@@ -139,10 +139,10 @@ namespace Checkers
                 deltas.Add((1, 1));
             }
 
-            foreach ((int X, int Y) delta in deltas)
+            foreach ((int X, int Y) in deltas)
             {
-                int dx = delta.X;
-                int dy = delta.Y;
+                int dx = X;
+                int dy = Y;
 
                 int ex = x + dx;
                 int ey = y + dy;
@@ -172,13 +172,13 @@ namespace Checkers
         private void ClearCoordinates((int X, int Y) coordinates) { ClearCoordinates(coordinates.X, coordinates.Y); }
         private void ClearCoordinates(int x, int y)
         {
-            Spaces[x, y] = new Piece(PieceColor.None, PieceType.None);
+            Pieces[x, y] = new Piece(PieceColor.None, PieceType.None);
         }
 
         private void SetCoordinates((int X, int Y) coordinates, Piece piece) { SetCoordinates(coordinates.X, coordinates.Y, piece); }
         private void SetCoordinates(int x, int y, Piece piece)
         {
-            Spaces[x, y] = piece;
+            Pieces[x, y] = piece;
         }
 
         public Board ApplyMovement(Movement movement)
